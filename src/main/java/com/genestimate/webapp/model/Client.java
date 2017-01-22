@@ -66,8 +66,7 @@ public class Client {
         if (name != null ? !name.equals(client.name) : client.name != null) return false;
         if (adress != null ? !adress.equals(client.adress) : client.adress != null) return false;
         if (phone != null ? !phone.equals(client.phone) : client.phone != null) return false;
-
-        return true;
+        return orders != null ? orders.equals(client.orders) : client.orders == null;
     }
 
     @Override
@@ -76,6 +75,7 @@ public class Client {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (adress != null ? adress.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (orders != null ? orders.hashCode() : 0);
         return result;
     }
 

@@ -1,15 +1,17 @@
 package com.genestimate.webapp.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Kais on 14.01.2017.
  */
 @Entity
-public class Paper {
+public class Paper implements Serializable{
+
     private FinalProductDimensions finalDimensions;
     private Integer nbPages;
-    private Dimensions printingDimensions;
+    private PrintingRawMaterialDimensions printingDimensions;
 
     @Id
     @ManyToOne
@@ -20,6 +22,17 @@ public class Paper {
 
     public void setFinalDimensions(FinalProductDimensions finalDimensions) {
         this.finalDimensions = finalDimensions;
+    }
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "PRINTINGDIMENSIONS", referencedColumnName = "ID", nullable = false)
+    public PrintingRawMaterialDimensions getPrintingDimensions() {
+        return printingDimensions;
+    }
+
+    public void setPrintingDimensions(PrintingRawMaterialDimensions printingDimensions) {
+        this.printingDimensions = printingDimensions;
     }
 
     @Basic
@@ -39,26 +52,17 @@ public class Paper {
 
         Paper paper = (Paper) o;
 
-        if (!finalDimensions.equals(paper.finalDimensions)) return false;
-        if (!nbPages.equals(paper.nbPages)) return false;
-        return printingDimensions.equals(paper.printingDimensions);
+        if (finalDimensions != null ? !finalDimensions.equals(paper.finalDimensions) : paper.finalDimensions != null)
+            return false;
+        if (nbPages != null ? !nbPages.equals(paper.nbPages) : paper.nbPages != null) return false;
+        return printingDimensions != null ? printingDimensions.equals(paper.printingDimensions) : paper.printingDimensions == null;
     }
 
     @Override
     public int hashCode() {
-        int result = finalDimensions.hashCode();
-        result = 31 * result + nbPages.hashCode();
-        result = 31 * result + printingDimensions.hashCode();
+        int result = finalDimensions != null ? finalDimensions.hashCode() : 0;
+        result = 31 * result + (nbPages != null ? nbPages.hashCode() : 0);
+        result = 31 * result + (printingDimensions != null ? printingDimensions.hashCode() : 0);
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "PRINTINGDIMENSIONS", referencedColumnName = "ID", nullable = false)
-    public Dimensions getPrintingDimensions() {
-        return printingDimensions;
-    }
-
-    public void setPrintingDimensions(Dimensions printingDimensions) {
-        this.printingDimensions = printingDimensions;
     }
 }

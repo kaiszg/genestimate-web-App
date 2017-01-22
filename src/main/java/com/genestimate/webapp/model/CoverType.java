@@ -43,4 +43,24 @@ public class CoverType {
     public void setProperties(List<Properties> properties) {
         this.properties = properties;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CoverType coverType = (CoverType) o;
+
+        if (id != coverType.id) return false;
+        if (name != null ? !name.equals(coverType.name) : coverType.name != null) return false;
+        return properties != null ? properties.equals(coverType.properties) : coverType.properties == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (properties != null ? properties.hashCode() : 0);
+        return result;
+    }
 }

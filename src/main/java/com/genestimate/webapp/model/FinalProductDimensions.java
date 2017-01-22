@@ -55,4 +55,27 @@ public class FinalProductDimensions extends Dimensions{
     public void setPropertiesList(List<Properties> propertiesList) {
         this.propertiesList = propertiesList;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FinalProductDimensions that = (FinalProductDimensions) o;
+
+        if (nbPagesPerPaper != that.nbPagesPerPaper) return false;
+        if (nbCoverCopiesPerPaper != that.nbCoverCopiesPerPaper) return false;
+        if (printingDimensions != null ? !printingDimensions.equals(that.printingDimensions) : that.printingDimensions != null)
+            return false;
+        return propertiesList != null ? propertiesList.equals(that.propertiesList) : that.propertiesList == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = printingDimensions != null ? printingDimensions.hashCode() : 0;
+        result = 31 * result + nbPagesPerPaper;
+        result = 31 * result + nbCoverCopiesPerPaper;
+        result = 31 * result + (propertiesList != null ? propertiesList.hashCode() : 0);
+        return result;
+    }
 }

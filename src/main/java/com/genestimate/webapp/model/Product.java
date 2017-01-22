@@ -43,14 +43,16 @@ public class Product {
 
         if (id != product.id) return false;
         if (name != null ? !name.equals(product.name) : product.name != null) return false;
-
-        return true;
+        if (components != null ? !components.equals(product.components) : product.components != null) return false;
+        return orders != null ? orders.equals(product.orders) : product.orders == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (components != null ? components.hashCode() : 0);
+        result = 31 * result + (orders != null ? orders.hashCode() : 0);
         return result;
     }
 

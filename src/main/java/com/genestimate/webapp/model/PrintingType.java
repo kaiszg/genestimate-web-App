@@ -42,14 +42,14 @@ public class PrintingType {
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+        return componentsProperties != null ? componentsProperties.equals(that.componentsProperties) : that.componentsProperties == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (componentsProperties != null ? componentsProperties.hashCode() : 0);
         return result;
     }
 

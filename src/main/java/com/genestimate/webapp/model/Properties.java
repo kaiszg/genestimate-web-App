@@ -49,14 +49,31 @@ public class Properties {
 
         if (id != that.id) return false;
         if (quantity != that.quantity) return false;
-
-        return true;
+        if (assemblyProcess != null ? !assemblyProcess.equals(that.assemblyProcess) : that.assemblyProcess != null)
+            return false;
+        if (componentsProperties != null ? !componentsProperties.equals(that.componentsProperties) : that.componentsProperties != null)
+            return false;
+        if (estimate != null ? !estimate.equals(that.estimate) : that.estimate != null) return false;
+        if (client != null ? !client.equals(that.client) : that.client != null) return false;
+        if (product != null ? !product.equals(that.product) : that.product != null) return false;
+        if (coverType != null ? !coverType.equals(that.coverType) : that.coverType != null) return false;
+        if (coverRawMaterial != null ? !coverRawMaterial.equals(that.coverRawMaterial) : that.coverRawMaterial != null)
+            return false;
+        return finalDimensions != null ? finalDimensions.equals(that.finalDimensions) : that.finalDimensions == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + quantity;
+        result = 31 * result + (assemblyProcess != null ? assemblyProcess.hashCode() : 0);
+        result = 31 * result + (componentsProperties != null ? componentsProperties.hashCode() : 0);
+        result = 31 * result + (estimate != null ? estimate.hashCode() : 0);
+        result = 31 * result + (client != null ? client.hashCode() : 0);
+        result = 31 * result + (product != null ? product.hashCode() : 0);
+        result = 31 * result + (coverType != null ? coverType.hashCode() : 0);
+        result = 31 * result + (coverRawMaterial != null ? coverRawMaterial.hashCode() : 0);
+        result = 31 * result + (finalDimensions != null ? finalDimensions.hashCode() : 0);
         return result;
     }
 

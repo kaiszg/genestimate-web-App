@@ -44,14 +44,18 @@ public class Component {
 
         if (id != component.id) return false;
         if (name != null ? !name.equals(component.name) : component.name != null) return false;
-
-        return true;
+        if (product != null ? !product.equals(component.product) : component.product != null) return false;
+        if (properties != null ? !properties.equals(component.properties) : component.properties != null) return false;
+        return rawMaterials != null ? rawMaterials.equals(component.rawMaterials) : component.rawMaterials == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (product != null ? product.hashCode() : 0);
+        result = 31 * result + (properties != null ? properties.hashCode() : 0);
+        result = 31 * result + (rawMaterials != null ? rawMaterials.hashCode() : 0);
         return result;
     }
 

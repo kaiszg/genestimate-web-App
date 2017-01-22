@@ -23,4 +23,19 @@ public class StandardRawMaterialDimensions extends Dimensions{
     public void setPrintingDimensionss(List<PrintingRawMaterialDimensions> printingDimensionss) {
         this.printingDimensionss = printingDimensionss;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StandardRawMaterialDimensions that = (StandardRawMaterialDimensions) o;
+
+        return printingDimensionss != null ? printingDimensionss.equals(that.printingDimensionss) : that.printingDimensionss == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return printingDimensionss != null ? printingDimensionss.hashCode() : 0;
+    }
 }

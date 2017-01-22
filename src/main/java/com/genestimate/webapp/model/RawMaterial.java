@@ -73,4 +73,31 @@ public class RawMaterial {
     public void setProperties(List<Properties> properties) {
         this.properties = properties;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RawMaterial that = (RawMaterial) o;
+
+        if (id != that.id) return false;
+        if (price != that.price) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (componentsProperties != null ? !componentsProperties.equals(that.componentsProperties) : that.componentsProperties != null)
+            return false;
+        if (component != null ? !component.equals(that.component) : that.component != null) return false;
+        return properties != null ? properties.equals(that.properties) : that.properties == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + price;
+        result = 31 * result + (componentsProperties != null ? componentsProperties.hashCode() : 0);
+        result = 31 * result + (component != null ? component.hashCode() : 0);
+        result = 31 * result + (properties != null ? properties.hashCode() : 0);
+        return result;
+    }
 }

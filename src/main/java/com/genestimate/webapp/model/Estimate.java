@@ -32,6 +32,16 @@ public class Estimate {
         this.price = price;
     }
 
+    @OneToOne
+    @JoinColumn(name = "PROPERTIES", referencedColumnName = "ID")
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,24 +51,14 @@ public class Estimate {
 
         if (id != estimate.id) return false;
         if (price != null ? !price.equals(estimate.price) : estimate.price != null) return false;
-
-        return true;
+        return properties != null ? properties.equals(estimate.properties) : estimate.properties == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + (properties != null ? properties.hashCode() : 0);
         return result;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "PROPERTIES", referencedColumnName = "ID")
-    public Properties getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Properties properties) {
-        this.properties = properties;
     }
 }

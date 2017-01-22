@@ -43,4 +43,25 @@ public class PrintingRawMaterialDimensions extends Dimensions{
     public void setStandardDimensions(StandardRawMaterialDimensions standardDimensions) {
         this.standardDimensions = standardDimensions;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PrintingRawMaterialDimensions that = (PrintingRawMaterialDimensions) o;
+
+        if (nbPagesFromStandard != that.nbPagesFromStandard) return false;
+        if (finalDimensions != null ? !finalDimensions.equals(that.finalDimensions) : that.finalDimensions != null)
+            return false;
+        return standardDimensions != null ? standardDimensions.equals(that.standardDimensions) : that.standardDimensions == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nbPagesFromStandard;
+        result = 31 * result + (finalDimensions != null ? finalDimensions.hashCode() : 0);
+        result = 31 * result + (standardDimensions != null ? standardDimensions.hashCode() : 0);
+        return result;
+    }
 }

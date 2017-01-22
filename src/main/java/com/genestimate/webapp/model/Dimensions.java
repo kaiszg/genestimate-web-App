@@ -44,4 +44,24 @@ public abstract class Dimensions {
     public void setLength(int length) {
         this.length = length;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Dimensions)) return false;
+
+        Dimensions that = (Dimensions) o;
+
+        if (id != that.id) return false;
+        if (width != that.width) return false;
+        return length == that.length;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + width;
+        result = 31 * result + length;
+        return result;
+    }
 }

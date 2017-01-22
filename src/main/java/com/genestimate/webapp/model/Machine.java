@@ -119,6 +119,8 @@ public class Machine {
         Machine machine = (Machine) o;
 
         if (id != machine.id) return false;
+        if (length != machine.length) return false;
+        if (width != machine.width) return false;
         if (name != null ? !name.equals(machine.name) : machine.name != null) return false;
         if (speed != null ? !speed.equals(machine.speed) : machine.speed != null) return false;
         if (hourlyCost != null ? !hourlyCost.equals(machine.hourlyCost) : machine.hourlyCost != null) return false;
@@ -126,8 +128,8 @@ public class Machine {
             return false;
         if (startupTime != null ? !startupTime.equals(machine.startupTime) : machine.startupTime != null) return false;
         if (nbColors != null ? !nbColors.equals(machine.nbColors) : machine.nbColors != null) return false;
-
-        return true;
+        if (properties != null ? !properties.equals(machine.properties) : machine.properties != null) return false;
+        return componentsProperties != null ? componentsProperties.equals(machine.componentsProperties) : machine.componentsProperties == null;
     }
 
     @Override
@@ -138,7 +140,11 @@ public class Machine {
         result = 31 * result + (hourlyCost != null ? hourlyCost.hashCode() : 0);
         result = 31 * result + (preparationTime != null ? preparationTime.hashCode() : 0);
         result = 31 * result + (startupTime != null ? startupTime.hashCode() : 0);
+        result = 31 * result + length;
+        result = 31 * result + width;
         result = 31 * result + (nbColors != null ? nbColors.hashCode() : 0);
+        result = 31 * result + (properties != null ? properties.hashCode() : 0);
+        result = 31 * result + (componentsProperties != null ? componentsProperties.hashCode() : 0);
         return result;
     }
 
