@@ -1,5 +1,9 @@
 package com.genestimate.webapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,9 +16,10 @@ import java.util.List;
 public class FinalProductDimensions extends Dimensions{
 
     private PrintingRawMaterialDimensions printingDimensions;
+
     private int nbPagesPerPaper;
     private int nbCoverCopiesPerPaper;
-    private List<Properties> propertiesList;
+    //private List<Properties> propertiesList;
 
 
     @Basic
@@ -46,8 +51,9 @@ public class FinalProductDimensions extends Dimensions{
     public void setPrintingDimensions(PrintingRawMaterialDimensions printingDimensions) {
         this.printingDimensions = printingDimensions;
     }
+/*
 
-    @OneToMany(mappedBy = "finalDimensions")
+    @OneToMany(mappedBy = "finalDimensions", fetch = FetchType.EAGER)
     public List<Properties> getPropertiesList() {
         return propertiesList;
     }
@@ -55,27 +61,27 @@ public class FinalProductDimensions extends Dimensions{
     public void setPropertiesList(List<Properties> propertiesList) {
         this.propertiesList = propertiesList;
     }
+*/
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         FinalProductDimensions that = (FinalProductDimensions) o;
 
         if (nbPagesPerPaper != that.nbPagesPerPaper) return false;
         if (nbCoverCopiesPerPaper != that.nbCoverCopiesPerPaper) return false;
-        if (printingDimensions != null ? !printingDimensions.equals(that.printingDimensions) : that.printingDimensions != null)
-            return false;
-        return propertiesList != null ? propertiesList.equals(that.propertiesList) : that.propertiesList == null;
+        return printingDimensions != null ? printingDimensions.equals(that.printingDimensions) : that.printingDimensions == null;
     }
 
     @Override
     public int hashCode() {
-        int result = printingDimensions != null ? printingDimensions.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (printingDimensions != null ? printingDimensions.hashCode() : 0);
         result = 31 * result + nbPagesPerPaper;
         result = 31 * result + nbCoverCopiesPerPaper;
-        result = 31 * result + (propertiesList != null ? propertiesList.hashCode() : 0);
         return result;
     }
 }

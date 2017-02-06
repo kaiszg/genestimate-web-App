@@ -7,6 +7,7 @@ import java.util.List;
  * Created by Kais on 14.01.2017.
  */
 @Entity
+@Table(name = "MACHINE", schema = "PUBLIC")
 public class Machine {
     private int id;
     private String name;
@@ -17,8 +18,8 @@ public class Machine {
     private int length;
     private int width;
     private Integer nbColors;
-    private List<Properties> properties;
-    private List<ComponentProperties> componentsProperties;
+    //private List<Properties> properties;
+    //private List<ComponentProperties> componentsProperties;
 
     @Id
     @GeneratedValue
@@ -127,9 +128,7 @@ public class Machine {
         if (preparationTime != null ? !preparationTime.equals(machine.preparationTime) : machine.preparationTime != null)
             return false;
         if (startupTime != null ? !startupTime.equals(machine.startupTime) : machine.startupTime != null) return false;
-        if (nbColors != null ? !nbColors.equals(machine.nbColors) : machine.nbColors != null) return false;
-        if (properties != null ? !properties.equals(machine.properties) : machine.properties != null) return false;
-        return componentsProperties != null ? componentsProperties.equals(machine.componentsProperties) : machine.componentsProperties == null;
+        return nbColors != null ? nbColors.equals(machine.nbColors) : machine.nbColors == null;
     }
 
     @Override
@@ -143,10 +142,10 @@ public class Machine {
         result = 31 * result + length;
         result = 31 * result + width;
         result = 31 * result + (nbColors != null ? nbColors.hashCode() : 0);
-        result = 31 * result + (properties != null ? properties.hashCode() : 0);
-        result = 31 * result + (componentsProperties != null ? componentsProperties.hashCode() : 0);
         return result;
     }
+
+    /*
 
     @ManyToMany(mappedBy = "assemblyProcess")
     public List<Properties> getProperties() {
@@ -156,7 +155,8 @@ public class Machine {
     public void setProperties(List<Properties> properties) {
         this.properties = properties;
     }
-
+*/
+/*
     @ManyToMany(mappedBy = "process")
     public List<ComponentProperties> getComponentsProperties() {
         return componentsProperties;
@@ -165,4 +165,5 @@ public class Machine {
     public void setComponentsProperties(List<ComponentProperties> componentsProperties) {
         this.componentsProperties = componentsProperties;
     }
+    */
 }

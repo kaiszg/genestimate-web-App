@@ -1,7 +1,11 @@
 package com.genestimate.webapp.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -13,29 +17,29 @@ import java.util.List;
 @DiscriminatorValue("STANDARD")
 public class StandardRawMaterialDimensions extends Dimensions{
 
-    private List<PrintingRawMaterialDimensions> printingDimensionss;
+    //private List<PrintingRawMaterialDimensions> printingDimensionss;
 
-    @OneToMany(mappedBy = "standardDimensions")
-    public List<PrintingRawMaterialDimensions> getPrintingDimensionss() {
-        return printingDimensionss;
-    }
+//    @OneToMany(mappedBy = "standardDimensions")
+//    public List<PrintingRawMaterialDimensions> getPrintingDimensionss() {
+//        return printingDimensionss;
+//    }
+//
+//    public void setPrintingDimensionss(List<PrintingRawMaterialDimensions> printingDimensionss) {
+//        this.printingDimensionss = printingDimensionss;
+//    }
 
-    public void setPrintingDimensionss(List<PrintingRawMaterialDimensions> printingDimensionss) {
-        this.printingDimensionss = printingDimensionss;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        StandardRawMaterialDimensions that = (StandardRawMaterialDimensions) o;
-
-        return printingDimensionss != null ? printingDimensionss.equals(that.printingDimensionss) : that.printingDimensionss == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return printingDimensionss != null ? printingDimensionss.hashCode() : 0;
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        StandardRawMaterialDimensions that = (StandardRawMaterialDimensions) o;
+//
+//        return printingDimensionss != null ? printingDimensionss.equals(that.printingDimensionss) : that.printingDimensionss == null;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return printingDimensionss != null ? printingDimensionss.hashCode() : 0;
+//    }
 }

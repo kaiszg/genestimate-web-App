@@ -6,10 +6,10 @@ import java.io.Serializable;
 /**
  * Created by Kais on 14.01.2017.
  */
-@Entity
+//@Entity
 public class Paper implements Serializable{
 
-    private FinalProductDimensions finalDimensions;
+    /*private FinalProductDimensions finalDimensions;
     private Integer nbPages;
     private PrintingRawMaterialDimensions printingDimensions;
 
@@ -64,5 +64,5 @@ public class Paper implements Serializable{
         result = 31 * result + (nbPages != null ? nbPages.hashCode() : 0);
         result = 31 * result + (printingDimensions != null ? printingDimensions.hashCode() : 0);
         return result;
-    }
+    }*/
 }

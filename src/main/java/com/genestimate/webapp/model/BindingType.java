@@ -8,11 +8,12 @@ import java.util.List;
  */
 
 @Entity
-public class CoverType {
+@Table(name = "BINDINGTYPE", schema = "PUBLIC")
+public class BindingType {
 
     private int id;
     private String name;
-    private List<Properties> properties;
+    //private List<Properties> properties;
 
     @Id
     @GeneratedValue
@@ -34,8 +35,9 @@ public class CoverType {
     public void setName(String name) {
         this.name = name;
     }
+/*
 
-    @OneToMany(mappedBy = "coverType")
+    @OneToMany(mappedBy = "bindingType", fetch = FetchType.EAGER)
     public List<Properties> getProperties() {
         return properties;
     }
@@ -43,24 +45,23 @@ public class CoverType {
     public void setProperties(List<Properties> properties) {
         this.properties = properties;
     }
+*/
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CoverType coverType = (CoverType) o;
+        BindingType that = (BindingType) o;
 
-        if (id != coverType.id) return false;
-        if (name != null ? !name.equals(coverType.name) : coverType.name != null) return false;
-        return properties != null ? properties.equals(coverType.properties) : coverType.properties == null;
+        if (id != that.id) return false;
+        return name != null ? name.equals(that.name) : that.name == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (properties != null ? properties.hashCode() : 0);
         return result;
     }
 }

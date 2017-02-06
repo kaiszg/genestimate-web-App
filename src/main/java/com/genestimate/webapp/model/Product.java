@@ -1,5 +1,8 @@
 package com.genestimate.webapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,10 +10,13 @@ import java.util.List;
  * Created by Kais on 14.01.2017.
  */
 @Entity
+@Table(name = "PRODUCT", schema = "PUBLIC")
 public class Product {
     private int id;
     private String name;
     private List<Component> components;
+
+    @JsonIgnore
     private List<Properties> orders;
 
     @Id
@@ -56,7 +62,7 @@ public class Product {
         return result;
     }
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     public List<Component> getComponents() {
         return components;
     }

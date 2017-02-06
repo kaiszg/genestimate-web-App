@@ -1,5 +1,9 @@
 package com.genestimate.webapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,11 +11,14 @@ import java.util.List;
  * Created by Kais on 14.01.2017.
  */
 @Entity
+@Table(name = "COMPONENT_PROPERTIES", schema = "PUBLIC")
 public class ComponentProperties {
     private int id;
     private int nbPages;
+    private double price;
     private Component component;
     private PrintingType printingType;
+    @JsonIgnore
     private Properties properties;
     private RawMaterial rawMaterial;
     private List<Machine> process;
@@ -35,6 +42,16 @@ public class ComponentProperties {
 
     public void setNbPages(int nbPages) {
         this.nbPages = nbPages;
+    }
+
+    @Basic
+    @Column(name = "PRICE")
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     @Override
@@ -85,7 +102,7 @@ public class ComponentProperties {
         this.printingType = printingType;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PROPERTIES", referencedColumnName = "ID", nullable = false)
     public Properties getProperties() {
         return properties;
@@ -106,8 +123,9 @@ public class ComponentProperties {
     }
 
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
-            name = "PROCESS",
+            name = "PROCESS", schema = "PUBLIC",
             joinColumns = @JoinColumn(name = "COMPONENTPROPERTIES", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "MACHINE", referencedColumnName = "ID"))
     public List<Machine> getProcess() {

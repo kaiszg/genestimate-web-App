@@ -1,5 +1,10 @@
 package com.genestimate.webapp.model;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,7 +17,9 @@ import java.util.List;
 public class PrintingRawMaterialDimensions extends Dimensions{
 
     private int nbPagesFromStandard;
-    private List<FinalProductDimensions> finalDimensions;
+
+//    private List<FinalProductDimensions> finalDimensions;
+
     private StandardRawMaterialDimensions standardDimensions;
 
     @Basic
@@ -25,14 +32,14 @@ public class PrintingRawMaterialDimensions extends Dimensions{
         this.nbPagesFromStandard = nbPagesFromStandard;
     }
 
-    @OneToMany(mappedBy = "printingDimensions")
-    public List<FinalProductDimensions> getFinalDimensions() {
-        return finalDimensions;
-    }
-
-    public void setFinalDimensions(List<FinalProductDimensions> finalDimensions) {
-        this.finalDimensions = finalDimensions;
-    }
+//    @OneToMany(mappedBy = "printingDimensions")
+//    public List<FinalProductDimensions> getFinalDimensions() {
+//        return finalDimensions;
+//    }
+//
+//    public void setFinalDimensions(List<FinalProductDimensions> finalDimensions) {
+//        this.finalDimensions = finalDimensions;
+//    }
 
     @ManyToOne
     @JoinColumn(name = "STANDARDDIMENSIONS", referencedColumnName = "ID")
@@ -48,19 +55,18 @@ public class PrintingRawMaterialDimensions extends Dimensions{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         PrintingRawMaterialDimensions that = (PrintingRawMaterialDimensions) o;
 
         if (nbPagesFromStandard != that.nbPagesFromStandard) return false;
-        if (finalDimensions != null ? !finalDimensions.equals(that.finalDimensions) : that.finalDimensions != null)
-            return false;
         return standardDimensions != null ? standardDimensions.equals(that.standardDimensions) : that.standardDimensions == null;
     }
 
     @Override
     public int hashCode() {
-        int result = nbPagesFromStandard;
-        result = 31 * result + (finalDimensions != null ? finalDimensions.hashCode() : 0);
+        int result = super.hashCode();
+        result = 31 * result + nbPagesFromStandard;
         result = 31 * result + (standardDimensions != null ? standardDimensions.hashCode() : 0);
         return result;
     }

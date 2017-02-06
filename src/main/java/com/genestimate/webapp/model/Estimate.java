@@ -6,9 +6,10 @@ import javax.persistence.*;
  * Created by Kais on 14.01.2017.
  */
 @Entity
+@Table(name = "ESTIMATE", schema = "PUBLIC")
 public class Estimate {
     private int id;
-    private Float price;
+    private double price;
     private Properties properties;
 
     @Id
@@ -24,11 +25,11 @@ public class Estimate {
 
     @Basic
     @Column(name = "PRICE")
-    public Float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -50,14 +51,17 @@ public class Estimate {
         Estimate estimate = (Estimate) o;
 
         if (id != estimate.id) return false;
-        if (price != null ? !price.equals(estimate.price) : estimate.price != null) return false;
+        if (Double.compare(estimate.price, price) != 0) return false;
         return properties != null ? properties.equals(estimate.properties) : estimate.properties == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        int result;
+        long temp;
+        result = id;
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (properties != null ? properties.hashCode() : 0);
         return result;
     }

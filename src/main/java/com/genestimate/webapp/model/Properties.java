@@ -1,22 +1,33 @@
 package com.genestimate.webapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
  * Created by Kais on 14.01.2017.
  */
 @Entity
+@Table(name = "PROPERTIES", schema = "PUBLIC")
 public class Properties {
     private int id;
     private int quantity;
+    private int nbPages;
+    private double coverPrintingPrice;
     private List<Machine> assemblyProcess;
     private List<ComponentProperties> componentsProperties;
+    @JsonIgnore
     private Estimate estimate;
     private Client client;
     private Product product;
-    private CoverType coverType;
+    private BindingType bindingType;
     private RawMaterial coverRawMaterial;
+    private PrintingType coverPrintingType;
     private FinalProductDimensions finalDimensions;
 
     @Id
@@ -40,45 +51,29 @@ public class Properties {
         this.quantity = quantity;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Properties that = (Properties) o;
-
-        if (id != that.id) return false;
-        if (quantity != that.quantity) return false;
-        if (assemblyProcess != null ? !assemblyProcess.equals(that.assemblyProcess) : that.assemblyProcess != null)
-            return false;
-        if (componentsProperties != null ? !componentsProperties.equals(that.componentsProperties) : that.componentsProperties != null)
-            return false;
-        if (estimate != null ? !estimate.equals(that.estimate) : that.estimate != null) return false;
-        if (client != null ? !client.equals(that.client) : that.client != null) return false;
-        if (product != null ? !product.equals(that.product) : that.product != null) return false;
-        if (coverType != null ? !coverType.equals(that.coverType) : that.coverType != null) return false;
-        if (coverRawMaterial != null ? !coverRawMaterial.equals(that.coverRawMaterial) : that.coverRawMaterial != null)
-            return false;
-        return finalDimensions != null ? finalDimensions.equals(that.finalDimensions) : that.finalDimensions == null;
+    @Basic
+    @Column(name = "NB_PAGES")
+    public int getNbPages() {
+        return nbPages;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + quantity;
-        result = 31 * result + (assemblyProcess != null ? assemblyProcess.hashCode() : 0);
-        result = 31 * result + (componentsProperties != null ? componentsProperties.hashCode() : 0);
-        result = 31 * result + (estimate != null ? estimate.hashCode() : 0);
-        result = 31 * result + (client != null ? client.hashCode() : 0);
-        result = 31 * result + (product != null ? product.hashCode() : 0);
-        result = 31 * result + (coverType != null ? coverType.hashCode() : 0);
-        result = 31 * result + (coverRawMaterial != null ? coverRawMaterial.hashCode() : 0);
-        result = 31 * result + (finalDimensions != null ? finalDimensions.hashCode() : 0);
-        return result;
+    public void setNbPages(int nbPages) {
+        this.nbPages = nbPages;
+    }
+
+    @Basic
+    @Column(name = "COVER_PRINTING_PRICE")
+    public double getCoverPrintingPrice() {
+        return coverPrintingPrice;
+    }
+
+    public void setCoverPrintingPrice(double coverPrintingPrice) {
+        this.coverPrintingPrice = coverPrintingPrice;
     }
 
     @ManyToMany
-    @JoinTable(name = "ASSEMBLYPROCESS", catalog = "GENESTIMATE", schema = "PUBLIC", joinColumns = @JoinColumn(name = "PROPERTIES", referencedColumnName = "ID", nullable = false), inverseJoinColumns = @JoinColumn(name = "MACHINE", referencedColumnName = "ID", nullable = false))
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name = "ASSEMBLYPROCESS", schema = "PUBLIC", joinColumns = @JoinColumn(name = "PROPERTIES", referencedColumnName = "ID", nullable = false), inverseJoinColumns = @JoinColumn(name = "MACHINE", referencedColumnName = "ID", nullable = false))
     public List<Machine> getAssemblyProcess() {
         return assemblyProcess;
     }
@@ -88,6 +83,7 @@ public class Properties {
     }
 
     @OneToMany(mappedBy = "properties")
+    @LazyCollection(LazyCollectionOption.FALSE)
     public List<ComponentProperties> getComponentsProperties() {
         return componentsProperties;
     }
@@ -96,7 +92,8 @@ public class Properties {
         this.componentsProperties = componentsProperties;
     }
 
-    @OneToOne(mappedBy = "properties")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ESTIMATE", referencedColumnName = "ID")
     public Estimate getEstimate() {
         return estimate;
     }
@@ -126,17 +123,17 @@ public class Properties {
     }
 
     @ManyToOne
-    @JoinColumn(name= "COVERTYPE", referencedColumnName = "ID")
-    public CoverType getCoverType() {
-        return coverType;
+    @JoinColumn(name= "BINDINGTYPE", referencedColumnName = "ID")
+    public BindingType getBindingType() {
+        return bindingType;
     }
 
-    public void setCoverType(CoverType coverType) {
-        this.coverType = coverType;
+    public void setBindingType(BindingType bindingType) {
+        this.bindingType = bindingType;
     }
 
     @ManyToOne
-    @JoinColumn(name = "DIMENSTIONS", referencedColumnName = "ID")
+    @JoinColumn(name = "DIMENSIONS", referencedColumnName = "ID")
     public FinalProductDimensions getFinalDimensions() {
         return finalDimensions;
     }
@@ -153,5 +150,15 @@ public class Properties {
 
     public void setCoverRawMaterial(RawMaterial coverRawMaterial) {
         this.coverRawMaterial = coverRawMaterial;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "COVERPRINTINGTYPE", referencedColumnName = "ID")
+    public PrintingType getCoverPrintingType() {
+        return coverPrintingType;
+    }
+
+    public void setCoverPrintingType(PrintingType coverPrintingType) {
+        this.coverPrintingType = coverPrintingType;
     }
 }

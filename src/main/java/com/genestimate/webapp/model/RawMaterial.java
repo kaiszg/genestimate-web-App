@@ -1,5 +1,7 @@
 package com.genestimate.webapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -7,13 +9,15 @@ import java.util.List;
  * Created by Kais on 14.01.2017.
  */
 @Entity
+@Table(name = "RAW_MATERIAL", schema = "PUBLIC")
 public class RawMaterial {
     private int id;
     private String name;
-    private int price;
+    private double price;
+
+    @JsonIgnore
     private List<ComponentProperties> componentsProperties;
-    private Component component;
-    private List<Properties> properties;
+    //private List<Properties> properties;
 
     @Id
     @GeneratedValue
@@ -38,11 +42,11 @@ public class RawMaterial {
 
     @Basic
     @Column(name = "PRICE")
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -54,16 +58,7 @@ public class RawMaterial {
     public void setComponentsProperties(List<ComponentProperties> componentsProperties) {
         this.componentsProperties = componentsProperties;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "COMPONENT", referencedColumnName = "ID")
-    public Component getComponent() {
-        return component;
-    }
-
-    public void setComponent(Component component) {
-        this.component = component;
-    }
+/*
 
     @OneToMany(mappedBy = "coverRawMaterial")
     public List<Properties> getProperties() {
@@ -73,31 +68,30 @@ public class RawMaterial {
     public void setProperties(List<Properties> properties) {
         this.properties = properties;
     }
+*/
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RawMaterial that = (RawMaterial) o;
+        RawMaterial material = (RawMaterial) o;
 
-        if (id != that.id) return false;
-        if (price != that.price) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (componentsProperties != null ? !componentsProperties.equals(that.componentsProperties) : that.componentsProperties != null)
-            return false;
-        if (component != null ? !component.equals(that.component) : that.component != null) return false;
-        return properties != null ? properties.equals(that.properties) : that.properties == null;
+        if (id != material.id) return false;
+        if (Double.compare(material.price, price) != 0) return false;
+        if (name != null ? !name.equals(material.name) : material.name != null) return false;
+        return componentsProperties != null ? componentsProperties.equals(material.componentsProperties) : material.componentsProperties == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result;
+        long temp;
+        result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + price;
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (componentsProperties != null ? componentsProperties.hashCode() : 0);
-        result = 31 * result + (component != null ? component.hashCode() : 0);
-        result = 31 * result + (properties != null ? properties.hashCode() : 0);
         return result;
     }
 }

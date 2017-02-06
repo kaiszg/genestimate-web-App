@@ -7,6 +7,7 @@ import java.util.List;
  * Created by Kais on 14.01.2017.
  */
 @Entity
+@Table(name = "DIMENSIONS", schema = "PUBLIC")
 @Inheritance
 @DiscriminatorColumn(name = "TYPE")
 public abstract class Dimensions {
