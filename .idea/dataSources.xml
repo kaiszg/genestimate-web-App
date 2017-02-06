@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="genestimate" uuid="bc344b9d-8a49-428b-9ddf-741761daa630">
+    <data-source source="LOCAL" name="genestimate-dataSource" uuid="5175de42-aa9a-4d3c-b5d9-1a9cbacd1d37">
       <driver-ref>h2.unified</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:~/genestimate</jdbc-url>
+      <jdbc-url>jdbc:h2:tcp://localhost/~/genestimate</jdbc-url>
     </data-source>
   </component>
 </project>
